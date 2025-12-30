@@ -4,6 +4,7 @@ import { User } from '@prisma/client';
 import { CreateuserDTO } from './domain/dto/createUser.dto.js';
 import { UpdateUserDto } from './domain/dto/updateUser.dto.js';
 import * as bcrypt from 'bcrypt';
+import { UserSelectFields } from '../prisma/utils/userSelectFields.js';
 
 @Injectable()
 export class UserService {
@@ -11,10 +12,15 @@ export class UserService {
 
   async createUser(body: CreateuserDTO): Promise<User> {
     body.password = await this.hashPassword(body.password);
-    return await this.prisma.user.create({ data: body });
+    return await this.prisma.user.create({
+      data: body,
+      select: UserSelectFields,
+    });
   }
   async list() {
-    return await this.prisma.user.findMany();
+    return await this.prisma.user.findMany({
+      select: UserSelectFields,
+    });
   }
 
   async show(id: number) {
@@ -31,6 +37,7 @@ export class UserService {
     return await this.prisma.user.update({
       where: { id },
       data: body,
+      select: UserSelectFields,
     });
   }
 
@@ -39,9 +46,17 @@ export class UserService {
     return await this.prisma.user.delete({ where: { id } });
   }
 
+  async findByEmail(email: string) {
+    return await this.prisma.user.findUnique({
+      where: { email },
+      select: UserSelectFields,
+    });
+  }
+
   private async isIdExists(id: number) {
     const user = await this.prisma.user.findUnique({
       where: { id },
+      select: UserSelectFields,
     });
 
     if (!user) {
