@@ -18,6 +18,7 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   generateJwtToken(user: User, expiresIn: string = '1d') {
     const payload = { sub: user.id, name: user.name };
     const options = {
@@ -61,7 +62,7 @@ export class AuthService {
     return this.generateJwtToken(user);
   }
 
-  private async validateToken(token: string): Promise<ValidateTokenDTO> {
+  async validateToken(token: string): Promise<ValidateTokenDTO> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const decoded = await this.jwtService.verifyAsync(token, {
