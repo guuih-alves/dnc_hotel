@@ -9,6 +9,8 @@ import { AuthRegisterDTO } from './domain/dto/authRegister.dto.js';
 import { CreateuserDTO } from '../users/domain/dto/createUser.dto.js';
 import { AuthResetPasswordDTO } from './domain/dto/authResetPassword.dto.js';
 import { ValidateTokenDTO } from './domain/dto/validateToken.dto.js';
+import { MailerService } from '@nestjs-modules/mailer';
+import { templateHTM } from './utils/templateHTML.js';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +18,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
     private readonly userService: UserService,
+    private readonly mailerService: MailerService,
   ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -85,7 +88,14 @@ export class AuthService {
       throw new UnauthorizedException('Email not found');
     }
 
-    const token = this.generateJwtToken(user, '30m');
-    return token;
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    const token = await this.generateJwtToken(user, '30m');
+
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Reset your password - DNC Hotel',
+      html: templateHTM(user.name, token.access_token),
+    });
+    return `A verification email has been sent to ${email}`;
   }
 }
