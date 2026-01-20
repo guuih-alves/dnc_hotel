@@ -10,6 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 
 
 
@@ -20,6 +21,12 @@ datasource db {
    USER
     }
 
+  enum ReservationStatus {
+    PENDING
+    APPROVED
+    CANCELLED
+  }
+
 model User {
    id Int @id @default(autoincrement()) 
    name String 
@@ -28,6 +35,7 @@ model User {
    role Role @default(USER) 
    avatar String?
    hotels Hotel[]
+    reservations Reservation[]
    createdAt DateTime @default(now()) 
    updatedAt DateTime @updatedAt
     @@map("users")
@@ -43,11 +51,31 @@ model User {
     address String
     price Float
     ownerId Int
+    status ReservationStatus @default(PENDING)
     owner User @relation(fields: [ownerId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@map("hotels")
-    }
+        reservations Reservation[]
+}
+
+    // N : N
     
+
+    model Reservation {
+    id Int @id @default(autoincrement())
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+    hotelId Int 
+    hotel Hotel @relation(fields: [hotelId], references: [id])
+    checkIn DateTime
+    checkOut DateTime
+    total Float
+    status ReservationStatus @default(PENDING)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("reservations")
+    }
     

@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { HOTEL_REPOSITORY_TOKEN } from '../utils/repositoriesTokens.js';
+import { REPOSITORY_TOKEN_HOTEL } from '../utils/repositoriesTokens.js';
 import * as IHotelRepositories from '../domain/repositories/IHotel.repositories.js';
 
 @Injectable()
 export class RemoveHotelService {
   constructor(
-    @Inject(HOTEL_REPOSITORY_TOKEN)
+    @Inject(REPOSITORY_TOKEN_HOTEL)
     private readonly hotelRepositories: IHotelRepositories.IHotelRepository,
   ) {}
   execute(id: number) {
