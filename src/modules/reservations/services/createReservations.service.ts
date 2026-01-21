@@ -6,6 +6,8 @@ import * as IHotelRepository from '../../../modules/hotels/domain/repositories/I
 import { differenceInDays, parseISO } from 'date-fns';
 import { ReservationStatus } from '@prisma/client';
 import { REPOSITORY_TOKEN_HOTEL } from '../../../modules/hotels/utils/repositoriesTokens.js';
+import { MailerService } from '@nestjs-modules/mailer';
+import { UserService } from '../../../modules/users/user.service.js';
 
 @Injectable()
 export class CreateReservationsService {
@@ -14,12 +16,14 @@ export class CreateReservationsService {
     private readonly reservationsRepository: IReservationsRepository.IReservationsRepository,
     @Inject(REPOSITORY_TOKEN_HOTEL)
     private readonly hotelsRepository: IHotelRepository.IHotelRepository,
+    private readonly mailerService: MailerService,
+    private readonly userService: UserService,
   ) {}
 
   async create(id: number, data: CreateReservationDto) {
     const checkInDate = parseISO(data.checkIn);
     const checkOutDate = parseISO(data.checkOut);
-    const daysOfStay = differenceInDays(checkOutDate, checkInDate);
+    const daysOfStay = differenceInDays(checkInDate, checkOutDate);
 
     if (checkInDate >= checkOutDate) {
       throw new BadRequestException(
@@ -48,6 +52,17 @@ export class CreateReservationsService {
       status: ReservationStatus.PENDING,
       hotelId: data.hotelId,
     };
+
+    const hotelOwner = await this.userService.show(hotel.ownerId);
+
+    await this.mailerService.sendMail({
+      to: hotelOwner.email,
+      subject: 'Pending Reservation Notification',
+      html: `<p>A new reservation has been made for your hotel: ${hotel.name}.</p>
+             <p>Check-in Date: ${newReservation.checkIn}</p>
+             <p>Check-out Date: ${newReservation.checkOut}</p>
+             <p>Total Amount: $${newReservation.total}</p>`,
+    });
 
     return this.reservationsRepository.create(newReservation);
   }
