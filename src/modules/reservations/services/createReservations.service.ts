@@ -1,13 +1,13 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { CreateReservationDto } from '../domain/dto/create-reservation.dto.js';
-import { REPOSITORY_TOKEN_RESERVATION } from '../utils/repositoriesTokens.js';
-import * as IReservationsRepository from '../domain/repositories/Ireservations.repository.js';
-import * as IHotelRepository from '../../../modules/hotels/domain/repositories/IHotel.repositories.js';
+import { CreateReservationDto } from '../domain/dto/create-reservation.dto';
+import { REPOSITORY_TOKEN_RESERVATION } from '../utils/repositoriesTokens';
+import * as IReservationsRepository from '../domain/repositories/Ireservations.repository';
+import * as IHotelRepository from '../../../modules/hotels/domain/repositories/IHotel.repositories';
 import { differenceInDays, parseISO } from 'date-fns';
 import { ReservationStatus } from '@prisma/client';
-import { REPOSITORY_TOKEN_HOTEL } from '../../../modules/hotels/utils/repositoriesTokens.js';
+import { REPOSITORY_TOKEN_HOTEL } from '../../../modules/hotels/utils/repositoriesTokens';
 import { MailerService } from '@nestjs-modules/mailer';
-import { UserService } from '../../../modules/users/user.service.js';
+import { UserService } from '../../../modules/users/user.service';
 
 @Injectable()
 export class CreateReservationsService {

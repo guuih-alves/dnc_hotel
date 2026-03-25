@@ -8,22 +8,22 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { CreateHotelsService } from '../services/createHotel.services.js';
-import { CreateHotelDTO } from '../dto/create-hotel.dto.js';
-import { UpdateHotelDTO } from '../dto/update-hotel.dto.js';
-import { FindAllHotelService } from '../services/findAllHotel.services.js';
-import { FindOneHotelService } from '../services/findOneHotel.service.js';
-import { RemoveHotelService } from '../services/removeHotel.services.js';
-import { UpdateHotelService } from '../services/updateHotel.services.js';
-import { ParamId } from '../../../shared/decorators/paramId.decorator.js';
-import { FindByOwnerHotelService } from '../services/findByOwner.services.js';
-import { FindByNameHotelService } from '../services/FindByName.services.js';
-import { AuthGuard } from '../../../shared/guards/auth.guard.js';
-import { RoleGuard } from '../../../shared/guards/role.guard.js';
-import { Roles } from '../../../shared/decorators/roles.decorators.js';
+import { CreateHotelsService } from '../services/createHotel.services';
+import { CreateHotelDTO } from '../dto/create-hotel.dto';
+import { UpdateHotelDTO } from '../dto/update-hotel.dto';
+import { FindAllHotelService } from '../services/findAllHotel.services';
+import { FindOneHotelService } from '../services/findOneHotel.service';
+import { RemoveHotelService } from '../services/removeHotel.services';
+import { UpdateHotelService } from '../services/updateHotel.services';
+import { ParamId } from '../../../shared/decorators/paramId.decorator';
+import { FindByOwnerHotelService } from '../services/findByOwner.services';
+import { FindByNameHotelService } from '../services/FindByName.services';
+import { AuthGuard } from '../../../shared/guards/auth.guard';
+import { RoleGuard } from '../../../shared/guards/role.guard';
+import { Roles } from '../../../shared/decorators/roles.decorators';
 import { Role } from '@prisma/client';
-import { OwnerHotelGuard } from '../../../shared/guards/ownerHotel.guard.js';
-import { User } from '../../../shared/decorators/user.decorators.js';
+import { OwnerHotelGuard } from '../../../shared/guards/ownerHotel.guard';
+import { User } from '../../../shared/decorators/user.decorators';
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller('hotels')

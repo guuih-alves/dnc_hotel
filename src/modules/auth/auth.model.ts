@@ -1,11 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthService } from './auth.service.js';
+import { AuthService } from './auth.service';
 
-import { PrismaModule } from '../prisma/prisma.module.js';
-import { AuthController } from './domain/auth.controller.js';
-import { UserModule } from '../users/user.module.js';
-import { AuthGuard } from '../../shared/guards/auth.guard.js';
+import { PrismaModule } from '../prisma/prisma.module';
+import { AuthController } from './domain/auth.controller';
+import { UserModule } from '../users/user.module';
+import { AuthGuard } from '../../shared/guards/auth.guard';
 
 @Module({
   imports: [

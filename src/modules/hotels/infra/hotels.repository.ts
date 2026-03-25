@@ -1,9 +1,9 @@
 import { Hotel } from '@prisma/client';
-import { IHotelRepository } from '../domain/repositories/IHotel.repositories.js';
-import { CreateHotelDTO } from '../dto/create-hotel.dto.js';
-import { PrismaService } from '../../../modules/prisma/prisma.service.js';
+import { IHotelRepository } from '../domain/repositories/IHotel.repositories';
+import { CreateHotelDTO } from '../dto/create-hotel.dto';
+import { PrismaService } from '../../../modules/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { UpdateHotelDTO } from '../dto/update-hotel.dto.js';
+import { UpdateHotelDTO } from '../dto/update-hotel.dto';
 
 @Injectable()
 export class HotelsRepositories implements IHotelRepository {

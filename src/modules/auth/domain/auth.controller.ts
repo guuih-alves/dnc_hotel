@@ -6,11 +6,11 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { AuthService } from '../auth.service.js';
-import { AuthLoginDTO } from './dto/authLogin.dto.js';
-import { AuthRegisterDTO } from './dto/authRegister.dto.js';
-import { AuthResetPasswordDTO } from './dto/authResetPassword.dto.js';
-import { AuthForgotPasswordDTO } from './dto/authForgotPassword.dto.js';
+import { AuthService } from '../auth.service';
+import { AuthLoginDTO } from './dto/authLogin.dto';
+import { AuthRegisterDTO } from './dto/authRegister.dto';
+import { AuthResetPasswordDTO } from './dto/authResetPassword.dto';
+import { AuthForgotPasswordDTO } from './dto/authForgotPassword.dto';
 
 @Controller('auth')
 export class AuthController {

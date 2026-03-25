@@ -4,12 +4,12 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
+import { PrismaService } from '../prisma/prisma.service';
 import { User } from '@prisma/client';
 import { CreateuserDTO } from './domain/dto/createUser.dto.js';
 import { UpdateUserDto } from './domain/dto/updateUser.dto.js';
 import * as bcrypt from 'bcrypt';
-import { UserSelectFields } from '../prisma/utils/userSelectFields.js';
+import { UserSelectFields } from '../prisma/utils/userSelectFields';
 
 @Injectable()
 export class UserService {

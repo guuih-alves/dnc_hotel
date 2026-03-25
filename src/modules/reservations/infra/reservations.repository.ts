@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { IReservationsRepository } from '../domain/repositories/Ireservations.repository.js';
+import { IReservationsRepository } from '../domain/repositories/Ireservations.repository';
 import { Reservation, ReservationStatus } from '@prisma/client';
-import { PrismaService } from '../../../modules/prisma/prisma.service.js';
+import { PrismaService } from '../../../modules/prisma/prisma.service';
 
 @Injectable()
 export class ReservationsRepository implements IReservationsRepository {
@@ -13,14 +13,37 @@ export class ReservationsRepository implements IReservationsRepository {
   }
 
   findById(id: number): Promise<Reservation | null> {
-    return this.prisma.reservation.findUnique({ where: { id } });
+    return this.prisma.reservation.findUnique({
+      where: { id },
+      include: {
+        user: true,
+      },
+    });
   }
+
   findAll(): Promise<Reservation[]> {
     return this.prisma.reservation.findMany();
   }
 
   findByUser(userId: number): Promise<Reservation[]> {
-    return this.prisma.reservation.findMany({ where: { userId } });
+    return this.prisma.reservation.findMany({
+      where: { userId },
+      orderBy: { id: 'desc' },
+      include: {
+        user: true,
+        hotel: true,
+      },
+    });
+  }
+
+  findByHotel(hotelId: number): Promise<Reservation[]> {
+    return this.prisma.reservation.findMany({
+      where: { hotelId },
+      orderBy: { id: 'desc' },
+      include: {
+        user: true,
+      },
+    });
   }
 
   updateStatus(id: number, status: ReservationStatus): Promise<Reservation> {

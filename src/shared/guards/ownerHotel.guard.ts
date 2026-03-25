@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { AuthService } from '../../modules/auth/auth.service.js';
-import { FindOneHotelService } from '../../modules/hotels/services/findOneHotel.service.js';
+import { AuthService } from '../../modules/auth/auth.service';
+import { FindOneHotelService } from '../../modules/hotels/services/findOneHotel.service';
 
 @Injectable()
 export class OwnerHotelGuard implements CanActivate {

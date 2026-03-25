@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from './modules/prisma/prisma.module.js';
-import { UserModule } from './modules/users/user.module.js';
-import { AuthModule } from './modules/auth/auth.model.js';
+import { PrismaModule } from './modules/prisma/prisma.module';
+import { UserModule } from './modules/users/user.module';
+import { AuthModule } from './modules/auth/auth.model';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { HotelsModule } from './modules/hotels/hotels.module.js';
-import { ReservationsModule } from './modules/reservations/reservations.module.js';
+import { HotelsModule } from './modules/hotels/hotels.module';
+import { ReservationsModule } from './modules/reservations/reservations.module';
 
 @Module({
   imports: [
